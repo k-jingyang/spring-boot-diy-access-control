@@ -8,7 +8,19 @@
         FROM ACL_P_OBJECT
         WHERE P_OBJECT_ID = #{id}
     </select>
+    
+    <select id="getAccessControlOfSection" resultMap="infoSectionPermissionsResultMap">
+        SELECT AC_ROLE_NAME, INFO_SECTION, PERMISSIONS
+        FROM ACL_SECTION_PERMISSIONS
+        WHERE INFO_SECTION = #{section}
+    </select>
 
+
+    <resultMap id="infoSectionPermissionsResultMap" type="InfoSectionPermissions">
+        <id column="INFO_SECTION" property="infoSection"/>
+        <result column="AC_ROLE_NAME" property="role"/>
+        <result column="PERMISSIONS" property="permissions"/>
+    </resultMap>
 
 
     <resultMap id="acResultMap" type="PAC">
