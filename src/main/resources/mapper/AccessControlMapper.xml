@@ -1,0 +1,27 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jingyang.accesscontrol.mapper.AccessControlMapper">
+
+    <select id="getRecords" resultMap="acResultMap">
+        SELECT P_OBJECT_ID, AC_ROLE_NAME, TEAM_ID, TEAM_NAME
+        FROM ACL_P_OBJECT
+        WHERE P_OBJECT_ID = #{id}
+    </select>
+
+
+
+    <resultMap id="acResultMap" type="PAC">
+        <id column="P_OBJECT_ID" property="pId"/>
+        <collection property="roleToTeamsList" ofType="ACRoleToTeams">
+            <result property="roleName" column="AC_ROLE_NAME"/>
+            <collection property="teamList" resultMap="teamResultMap"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="teamResultMap" type="Team">
+        <id column="TEAM_ID" property="teamId"/>
+        <result column="TEAM_NAME" property="teamName"/>
+    </resultMap>
+    
+</mapper>
