@@ -14,7 +14,7 @@ public class SecurityController {
 
     @GetMapping("")
     public String getHelloWorld(){
-        return accessControlService.getPAccessControl(1L).toString();
+        return "";
     }
 
 }
