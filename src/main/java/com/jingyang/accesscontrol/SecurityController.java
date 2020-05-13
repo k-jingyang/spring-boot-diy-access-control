@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 public class SecurityController {
 
@@ -13,8 +12,8 @@ public class SecurityController {
     AccessControlService accessControlService;
 
     @GetMapping("")
-    public String getHelloWorld(){
-        return "";
+    public String getHelloWorld() {
+        return "hello";
     }
 
 }
