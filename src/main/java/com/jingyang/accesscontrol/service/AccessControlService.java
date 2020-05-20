@@ -23,22 +23,24 @@ public class AccessControlService {
     public boolean userHasAccess(Long pId, PSection section, Permission permission, UserInfo user) {
         PACL pACL = accessControlMapper.getPACL(pId);
 
-        if(pACL == null) {
+        if (pACL == null) {
             throw new IllegalArgumentException("Unable to retrieve access control of p");
         }
 
         return hasAccessToInformation(pACL, section, permission, user);
     }
 
-    public boolean hasAccessToInformation(PACL pACL, PSection sectionToAccess, Permission permission, UserInfo user) {
-        Multimap<Team, String> teamToRolesMap = pACL.getTeamToRolesMap();
+    public boolean hasAccessToInformation(PACL pACL, PSection sectionToAccess,
+                    Permission permission, UserInfo user) {
+
+        Multimap<String, String> teamToRolesMap = pACL.getTeamToRolesMap();
         Map<String, Integer> roleToPermissionsMap = getRoleToPermissionsMap(sectionToAccess);
 
-        for(Team team : user.getTeamList()) {
-            Collection<String> rolesOfTeam = teamToRolesMap.get(team);
-            for(String role : rolesOfTeam){
+        for (Team team : user.getTeamList()) {
+            Collection<String> rolesOfTeam = teamToRolesMap.get(team.getTeamName());
+            for (String role : rolesOfTeam) {
                 Integer aclPermission = roleToPermissionsMap.get(role);
-                if(permission.isWithin(aclPermission)) {
+                if (permission.isWithin(aclPermission)) {
                     return true;
                 }
             }
@@ -50,7 +52,7 @@ public class AccessControlService {
     private Map<String, Integer> getRoleToPermissionsMap(PSection pSection) {
         List<PSectionACL> pSectionACLs = accessControlMapper.getPSectionACL(pSection);
         HashMap<String, Integer> roleToPermissionsMap = new HashMap();
-        for(PSectionACL rolePermissions : pSectionACLs) {
+        for (PSectionACL rolePermissions : pSectionACLs) {
             roleToPermissionsMap.put(rolePermissions.getRole(), rolePermissions.getPermissions());
         }
         return roleToPermissionsMap;

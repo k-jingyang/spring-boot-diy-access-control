@@ -1,0 +1,52 @@
+{
+  "input": {
+    "path": ["/kmo/p/1"],
+    "headers": {
+      "sec-fetch-mode": "navigate",
+      "sec-fetch-site": "none",
+      "accept-language": "en-CA,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,zh-CN;q=0.6,zh;q=0.5",
+      "cookie": "OAuth_Token_Request_State=51696801-583d-413c-8ee6-b4ec41a1f4cc; JSESSIONID=8CD23C81E29BEFAB04B2752887975AA6",
+      "sec-fetch-user": "?1",
+      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+      "host": "localhost:8080",
+      "upgrade-insecure-requests": "1",
+      "connection": "keep-alive",
+      "cache-control": "max-age=0",
+      "accept-encoding": "gzip, deflate, br",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.92 Safari/537.36",
+      "sec-fetch-dest": "document"
+    },
+    "method": "GET",
+    "auth": {
+      "authorities": [
+        { "authority": "ROLE_TEST" },
+        { "authority": "ROLE_USER" }
+      ],
+      "details": {
+        "remoteAddress": "0:0:0:0:0:0:0:1",
+        "sessionId": "FC55ACD13127472E5E65E6D963772A50"
+      },
+      "authenticated": true,
+      "principal": {
+        "password": null,
+        "username": "saul",
+        "authorities": [
+          { "authority": "ROLE_TEST" },
+          { "authority": "ROLE_USER" }
+        ],
+        "accountNonExpired": true,
+        "accountNonLocked": true,
+        "credentialsNonExpired": true,
+        "enabled": true
+      },
+      "credentials": null,
+      "name": "saul"
+    },
+    "acl": {
+      "AQUA": ["Viewer"],
+      "ROCKET": ["Owner"],
+      "GALACTIC": ["Collaborator"],
+      "MAGMA": ["Viewer"]
+    }
+  }
+}

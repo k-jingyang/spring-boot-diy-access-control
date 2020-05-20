@@ -1,40 +1,48 @@
 package com.jingyang.accesscontrol.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class PACL {
     private Long pId;
+
+    @JsonIgnore
     private List<RoleToTeams> roleToTeamsList;
 
-    public Multimap<String, Team> getRoleToTeamsMap(){
+    public Multimap<String, Team> getRoleToTeamsMap() {
         ArrayListMultimap<String, Team> roleToTeamsMap = ArrayListMultimap.create();
 
-        for(RoleToTeams roleToTeams : roleToTeamsList) {
+        for (RoleToTeams roleToTeams : roleToTeamsList) {
             roleToTeamsMap.putAll(roleToTeams.getRole(), roleToTeams.getTeamList());
         }
 
         return roleToTeamsMap;
     }
 
-    public Multimap<Team, String> getTeamToRolesMap(){
-        ArrayListMultimap<Team, String> roleToTeamsMap = ArrayListMultimap.create();
+    public Map<String, Collection<String>> getTeamToRolesHashMap() {
+        return getTeamToRolesMap().asMap();
+    }
 
-        for(RoleToTeams roleToTeams : roleToTeamsList) {
-            for(Team team : roleToTeams.getTeamList()) {
-                roleToTeamsMap.put(team, roleToTeams.getRole());
+    public Multimap<String, String> getTeamToRolesMap() {
+        ArrayListMultimap<String, String> roleToTeamsMap = ArrayListMultimap.create();
+
+        for (RoleToTeams roleToTeams : roleToTeamsList) {
+            for (Team team : roleToTeams.getTeamList()) {
+                roleToTeamsMap.put(team.getTeamName(), roleToTeams.getRole());
             }
         }
-
         return roleToTeamsMap;
     }
 

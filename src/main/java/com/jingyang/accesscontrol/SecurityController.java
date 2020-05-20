@@ -16,4 +16,9 @@ public class SecurityController {
         return "hello";
     }
 
+    @GetMapping("/hello")
+    public String getTest() {
+        return "test";
+    }
+
 }

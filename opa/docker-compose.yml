@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  opa:
+    image: openpolicyagent/opa
+    ports:
+      - "8181:8181"
+    volumes:
+      - type: bind
+        source: ./policy
+        target: /policy
+    command: ["run", "--server", "--log-level", "debug", "/policy"]

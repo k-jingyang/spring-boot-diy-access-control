@@ -6,6 +6,7 @@
     <select id="getPACL" resultMap="acResultMap">
         SELECT P_OBJECT_ID, AC_ROLE_NAME, TEAM_ID, TEAM_NAME
         FROM ACL_P_OBJECT
+        
         WHERE P_OBJECT_ID = #{id}
     </select>
     
