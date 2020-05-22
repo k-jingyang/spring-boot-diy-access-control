@@ -60,11 +60,12 @@ public class KmoOPAVoter implements AccessDecisionVoter<Object> {
 
         log.info("requestURL: {}", filter.getRequestUrl());
         log.info("requestURI: {}", filter.getRequest().getRequestURI());
-        // String[] path = filter.getRequest().getRequestURI().replaceAll("^/|/$", "").split("/");
+        String[] path = filter.getRequest().getRequestURI().replaceAll("^/|/$", "").split("/");
+        log.info(Arrays.toString(path));
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("auth", authentication);
         input.put("method", filter.getRequest().getMethod());
-        input.put("path", filter.getRequestUrl());
+        input.put("path", path);
         input.put("headers", headers);
         input.put("pacl", pacl.getTeamToRolesHashMap());
 
