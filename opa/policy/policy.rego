@@ -18,7 +18,7 @@ allow {
 	allowedTeamRoles := { "Viewer", "Collaborator", "Owner"}
 
 	input.method == "GET"
-	input.path = ["api", "v1", "kmo", "p", _]
+	input.path = ["api", "v1", "p", _]
 	allow_user_roles == true
 
 	# some i
