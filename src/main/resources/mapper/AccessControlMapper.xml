@@ -34,7 +34,7 @@
 
     <resultMap id="teamResultMap" type="Team">
         <id property="teamId" column="TEAM_ID" />
-        <result property="teamName" column="TEAM_NAME" />
+        <result property="name" column="TEAM_NAME" />
     </resultMap>
     
 </mapper>

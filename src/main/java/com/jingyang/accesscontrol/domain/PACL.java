@@ -1,11 +1,9 @@
 package com.jingyang.accesscontrol.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import java.util.Collection;
@@ -40,7 +38,7 @@ public class PACL {
 
         for (RoleToTeams roleToTeams : roleToTeamsList) {
             for (Team team : roleToTeams.getTeamList()) {
-                roleToTeamsMap.put(team.getTeamName(), roleToTeams.getRole());
+                roleToTeamsMap.put(team.getName(), roleToTeams.getRole());
             }
         }
         return roleToTeamsMap;

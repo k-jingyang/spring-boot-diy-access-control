@@ -14,22 +14,22 @@ import lombok.ToString;
 public class Team {
 
     private Long teamId;
-    private String teamName;
+    private String name;
 
     public static Team mockTeamRocket() {
-        return new Team(1L, "Rocket");
+        return new Team(1L, "ROCKET");
     }
 
     public static Team mockTeamMagma() {
-        return new Team(2L, "Magma");
+        return new Team(2L, "MAGMA");
     }
 
     public static Team mockTeamAqua() {
-        return new Team(3L, "Aqua");
+        return new Team(3L, "AQUA");
     }
 
     public static Team mockTeamGalactic() {
-        return new Team(4L, "Galactic");
+        return new Team(4L, "GALACTIC");
     }
 
 }

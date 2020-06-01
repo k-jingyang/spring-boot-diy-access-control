@@ -36,8 +36,8 @@ public class AccessControlService {
         Multimap<String, String> teamToRolesMap = pACL.getTeamToRolesMap();
         Map<String, Integer> roleToPermissionsMap = getRoleToPermissionsMap(sectionToAccess);
 
-        for (Team team : user.getTeamList()) {
-            Collection<String> rolesOfTeam = teamToRolesMap.get(team.getTeamName());
+        for (Team team : user.getTeams()) {
+            Collection<String> rolesOfTeam = teamToRolesMap.get(team.getName());
             for (String role : rolesOfTeam) {
                 Integer aclPermission = roleToPermissionsMap.get(role);
                 if (permission.isWithin(aclPermission)) {

@@ -1,5 +1,5 @@
 {
-  "path": ["api", "v1", "kmo", "p", "1"],
+  "path": ["api", "v1", "p", "1"],
   "headers": {
     "sec-fetch-mode": "navigate",
     "sec-fetch-site": "none",
@@ -27,7 +27,7 @@
       "password": null,
       "username": "saul",
       "authorities": [{ "authority": "ROLE_USER" }],
-      "teams": ["MAGMA", "PLASMA"],
+      "teams": [{"name" : "MAGMA"} , { "name" : "PLASMA"}],
       "accountNonExpired": true,
       "accountNonLocked": true,
       "credentialsNonExpired": true,
@@ -37,7 +37,7 @@
     "name": "saul"
   },
   "pacl": {
-    "AQUA": ["Viewer"],
+    "AQUA": ["Collaborator", "Viewer"],
     "ROCKET": ["Owner"],
     "GALACTIC": ["Collaborator"],
     "MAGMA": ["Viewer"]

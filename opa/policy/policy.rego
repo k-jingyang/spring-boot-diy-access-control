@@ -8,7 +8,7 @@ allow_user_roles {
 
 allow {
 	# To allow these paths as long as there are user roles
-	allowedPaths := { [""], ["api", "v1", "kmo"] }  
+	allowedPaths := { [""], ["api", "v1"] }  
 	allow_user_roles == true
 	allowedPaths[input.path]
 }
@@ -22,7 +22,7 @@ allow {
 	allow_user_roles == true
 
 	# some i
-	team := "MAGMA" # input.auth.principal.teams[i]
+	team := input.auth.principal.teams[i].name # "MAGMA"
 	roleOfTeam := input.pacl[team][_]
 	allowedTeamRoles[roleOfTeam]
 }

@@ -1,16 +1,20 @@
 package com.jingyang.accesscontrol;
 
+import com.jingyang.accesscontrol.domain.Team;
+import com.jingyang.accesscontrol.domain.UserInfo;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Arrays;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,30 +39,39 @@ class SecuredControllerTest {
 	// These tests verifies the integration with OPA (i.e. correct information is sent to OPA and OPA's response is interpreted correctly)
 	// Further policy testing to be done on OPA
 
-	//TODO withUserDetails
-
-	@WithMockUser(username = "test", roles = {"USER"})
 	@Test
 	public void testHasAccessToPINFO() throws Exception {
-		mvc.perform(get("/api/v1/kmo/p/1")).andExpect(status().isOk());
+		UserInfo aquaGalacticGrunt = UserInfo.builder()
+				.teams(Arrays.asList(
+						Team.mockTeamAqua(), Team.mockTeamGalactic()
+				))
+				.roles(Arrays.asList(
+						"USER"
+				)).build();
+		mvc.perform(get("/api/v1/p/1").with(user(aquaGalacticGrunt))).andExpect(status().isOk());
 	}
 
-	@WithMockUser(username = "test", roles = {"USER"})
 	@Test
 	public void testNoAccessToPINFO() throws Exception {
-		mvc.perform(get("/api/v1/kmo/p/1")).andExpect(status().isForbidden());
+		UserInfo aquaGrunt = UserInfo.builder()
+				.teams(Arrays.asList(
+						Team.mockTeamAqua()
+				))
+				.roles(Arrays.asList(
+						"USER"
+				)).build();
+		mvc.perform(get("/api/v1/p/2").with(user(aquaGrunt))).andExpect(status().isForbidden());
 	}
 
-	@WithMockUser(username = "test", roles = {"USER"})
 	@Test
 	public void testHasAccessToAINFO() throws Exception {
-		mvc.perform(get("/api/v1/kmo/p/1")).andExpect(status().isOk());
+		mvc.perform(get("/api/v1/p/1")).andExpect(status().isOk());
 	}
 
-	@WithMockUser(username = "test", roles = {"USER"})
 	@Test
 	public void testNoAccessToAINFO() throws Exception {
-		mvc.perform(get("/api/v1/kmo/p/1")).andExpect(status().isForbidden());
+		mvc.perform(get("/api/v1/p/1")).andExpect(status().isForbidden());
 	}
 
+	// Why use RequestPostProcessor? Because we can mock the user object without retrieving it using a UserDetailsService
 }

@@ -44,7 +44,8 @@ class AccessControlApplicationTests {
 		RoleToTeams viewerTeams = new RoleToTeams("Viewer", Lists.newArrayList(Team.mockTeamAqua()));
 		PACL pACL = new PACL(1L, Lists.newArrayList(viewerTeams));
 
-		UserInfo aquaGrunt = new UserInfo(Lists.newArrayList(Team.mockTeamAqua()));
+		UserInfo aquaGrunt = UserInfo.builder().teams(Lists.newArrayList(Team.mockTeamAqua())).build();
+
 
 		assertTrue(accessControlService.hasAccessToInformation(pACL, PSection.SECTION_1,
 				Permission.READ, aquaGrunt));
@@ -61,7 +62,8 @@ class AccessControlApplicationTests {
 
 		PACL pACL = new PACL(1L, Lists.newArrayList(viewerTeams, collabTeams));
 
-		UserInfo aquaGalacticGrunt = new UserInfo(Lists.newArrayList(Team.mockTeamAqua(), Team.mockTeamGalactic()));
+		UserInfo aquaGalacticGrunt = UserInfo.builder().teams(
+				Lists.newArrayList(Team.mockTeamAqua(), Team.mockTeamGalactic())).build();
 
 		assertTrue(accessControlService.hasAccessToInformation(pACL, PSection.SECTION_1,
 				Permission.READ, aquaGalacticGrunt));
@@ -76,7 +78,7 @@ class AccessControlApplicationTests {
 		RoleToTeams roleToTeams = new RoleToTeams("Owner", Lists.newArrayList(Team.mockTeamRocket()));
 		PACL pACL = new PACL(2L, Lists.newArrayList(roleToTeams));
 
-		UserInfo magmaGrunt = new UserInfo(Lists.newArrayList(Team.mockTeamMagma()));
+		UserInfo magmaGrunt = UserInfo.builder().teams(Lists.newArrayList(Team.mockTeamMagma())).build();
 
 		assertFalse(accessControlService.hasAccessToInformation(pACL, PSection.SECTION_1,
 				Permission.READ, magmaGrunt));
