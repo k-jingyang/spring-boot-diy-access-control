@@ -1,7 +1,5 @@
-package com.jingyang.accesscontrol;
+package com.jingyang.accesscontrol.config;
 
-import com.google.common.collect.Lists;
-import com.jingyang.accesscontrol.domain.KmoOPAVoter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +11,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -30,6 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests().antMatchers("/**").permitAll().and().anonymous();
+
         http.authorizeRequests().antMatchers("/static/**").permitAll().and().authorizeRequests()
                         .anyRequest().authenticated().accessDecisionManager(accessDecisionManager())
                         .and().formLogin();
@@ -41,16 +41,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.builder().username("saul").password("{noop}password").roles("USER")
-                        .build();
-        return new InMemoryUserDetailsManager(user);
+    public AccessDecisionManager accessDecisionManager() {
+        return new UnanimousBased(Arrays.asList(new WebExpressionVoter(), kmoOPAVoter));
     }
 
     @Bean
-    public AccessDecisionManager accessDecisionManager() {
-        return new UnanimousBased(Lists.newArrayList(new WebExpressionVoter(), kmoOPAVoter));
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
 }

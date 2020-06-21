@@ -1,7 +1,7 @@
 package com.jingyang.accesscontrol;
 
 import com.jingyang.accesscontrol.domain.Team;
-import com.jingyang.accesscontrol.domain.UserInfo;
+import com.jingyang.accesscontrol.domain.VillainUser;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -38,10 +38,9 @@ class SecuredControllerTest {
 
 	// These tests verifies the integration with OPA (i.e. correct information is sent to OPA and OPA's response is interpreted correctly)
 	// Further policy testing to be done on OPA
-
 	@Test
 	public void testHasAccessToPINFO() throws Exception {
-		UserInfo aquaGalacticGrunt = UserInfo.builder()
+		VillainUser aquaGalacticGrunt = VillainUser.builder()
 				.teams(Arrays.asList(
 						Team.mockTeamAqua(), Team.mockTeamGalactic()
 				))
@@ -53,7 +52,7 @@ class SecuredControllerTest {
 
 	@Test
 	public void testNoAccessToPINFO() throws Exception {
-		UserInfo aquaGrunt = UserInfo.builder()
+		VillainUser aquaGrunt = VillainUser.builder()
 				.teams(Arrays.asList(
 						Team.mockTeamAqua()
 				))
@@ -63,15 +62,4 @@ class SecuredControllerTest {
 		mvc.perform(get("/api/v1/p/2").with(user(aquaGrunt))).andExpect(status().isForbidden());
 	}
 
-	@Test
-	public void testHasAccessToAINFO() throws Exception {
-		mvc.perform(get("/api/v1/p/1")).andExpect(status().isOk());
-	}
-
-	@Test
-	public void testNoAccessToAINFO() throws Exception {
-		mvc.perform(get("/api/v1/p/1")).andExpect(status().isForbidden());
-	}
-
-	// Why use RequestPostProcessor? Because we can mock the user object without retrieving it using a UserDetailsService
 }

@@ -1,8 +1,7 @@
 package com.jingyang.accesscontrol.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +14,12 @@ import java.util.stream.Collectors;
 @Getter
 @Builder
 @AllArgsConstructor
-public class UserInfo implements UserDetails {
+@NoArgsConstructor
+@ToString
+public class VillainUser implements UserDetails {
 
     private String username;
+    @JsonIgnore
     private String password;
     private List<String> roles;
     private List<Team> teams;
@@ -32,7 +34,7 @@ public class UserInfo implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return password;
     }
 
     @Override
@@ -42,21 +44,21 @@ public class UserInfo implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

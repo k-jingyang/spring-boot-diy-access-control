@@ -19,16 +19,6 @@ public class PACL {
     @JsonIgnore
     private List<RoleToTeams> roleToTeamsList;
 
-    public Multimap<String, Team> getRoleToTeamsMap() {
-        ArrayListMultimap<String, Team> roleToTeamsMap = ArrayListMultimap.create();
-
-        for (RoleToTeams roleToTeams : roleToTeamsList) {
-            roleToTeamsMap.putAll(roleToTeams.getRole(), roleToTeams.getTeamList());
-        }
-
-        return roleToTeamsMap;
-    }
-
     public Map<String, Collection<String>> getTeamToRolesHashMap() {
         return getTeamToRolesMap().asMap();
     }
@@ -37,8 +27,8 @@ public class PACL {
         ArrayListMultimap<String, String> roleToTeamsMap = ArrayListMultimap.create();
 
         for (RoleToTeams roleToTeams : roleToTeamsList) {
-            for (Team team : roleToTeams.getTeamList()) {
-                roleToTeamsMap.put(team.getName(), roleToTeams.getRole());
+            for (String team : roleToTeams.getTeams()) {
+                roleToTeamsMap.put(team, roleToTeams.getRole());
             }
         }
         return roleToTeamsMap;

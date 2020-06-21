@@ -1,0 +1,24 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jingyang.accesscontrol.mapper.UserInfoMapper">
+
+    <select id="getUserByUsername" resultMap="userInfoResultMap">
+        SELECT users.USERNAME, users.PASSWORD, users.ROLE, user_team.TEAM_NAME
+        FROM users
+        LEFT JOIN user_team ON users.USERNAME = user_team.USERNAME
+        WHERE users.USERNAME = #{username}
+    </select>
+
+    <resultMap id="userInfoResultMap" type="VillainUser">
+        <id property="username" column="USERNAME"/>
+        <result property="password" column="PASSWORD"/>
+        <collection property="roles" ofType="String" column="ROLE">
+            <id property="value" column="ROLE" javaType="String"/>
+        </collection>
+        <collection property="teams" ofType="String">
+            <id property="value" column="TEAM_NAME" javaType="String"/>
+        </collection>
+    </resultMap>
+
+</mapper>

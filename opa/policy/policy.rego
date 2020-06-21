@@ -8,42 +8,37 @@ allow_user_roles {
 
 allow {
 	# To allow these paths as long as there are user roles
-	allowedPaths := { [""], ["api", "v1"] }  
+    input.path = ""
 	allow_user_roles == true
-	allowedPaths[input.path]
 }
 
-# READ - SECTION1
-allow { 
+# READ - GENERAL INFORMATION
+allow {
 	allowedTeamRoles := { "Viewer", "Collaborator", "Owner"}
 
 	input.method == "GET"
-	input.path = ["api", "v1", "p", _]
+    input.path = ["api", "v1", "pokemon", _]
 	allow_user_roles == true
 
 	# some i
-	team := input.auth.principal.teams[i].name # "MAGMA"
+	team := input.auth.principal.teams[i]
 	roleOfTeam := input.pacl[team][_]
 	allowedTeamRoles[roleOfTeam]
 }
 
-# READ - SECTION2
-allow {
-	false
+
+# READ - LOCATION
+allow { 
+	allowedTeamRoles := { "Collaborator", "Owner" }
+
+	input.method == "GET"
+	input.path = ["api", "v1", "pokemon", _, "location"]
+	allow_user_roles == true
+
+	# some i
+	team := input.auth.principal.teams[i]
+    roleOfTeam := input.pacl[team][_]
+	allowedTeamRoles[roleOfTeam]
 }
 
-# READ - SECTION3
-allow {
-	false
-}
-
-# CREATE
-allow {
-	false
-}
-
-# UPDATE
-allow {
-	false
-}
 

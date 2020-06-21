@@ -4,37 +4,19 @@
 <mapper namespace="com.jingyang.accesscontrol.mapper.AccessControlMapper">
 
     <select id="getPACL" resultMap="acResultMap">
-        SELECT P_OBJECT_ID, AC_ROLE_NAME, TEAM_ID, TEAM_NAME
-        FROM ACL_P_OBJECT
-        
-        WHERE P_OBJECT_ID = #{id}
+        SELECT POKEMON_ID, AC_ROLE_NAME, TEAM_NAME
+        FROM POKEMON_ACL
+        WHERE POKEMON_ID = #{id}
     </select>
-    
-    <select id="getPSectionACL" resultMap="pSectionPermissionsResultMap">
-        SELECT AC_ROLE_NAME, P_SECTION, PERMISSIONS
-        FROM ACL_SECTION_PERMISSIONS
-        WHERE P_SECTION = #{section}
-    </select>
-
-
-    <resultMap id="pSectionPermissionsResultMap" type="PSectionACL">
-        <id property="pSection" column="P_SECTION"/>
-        <result property="role" column="AC_ROLE_NAME"/>
-        <result property="permissions" column="PERMISSIONS"/>
-    </resultMap>
-
 
     <resultMap id="acResultMap" type="PACL">
-        <id column="P_OBJECT_ID" property="pId"/>
+        <id column="POKEMON_ID" property="pId"/>
         <collection property="roleToTeamsList" ofType="RoleToTeams">
             <result property="role" column="AC_ROLE_NAME"/>
-            <collection property="teamList" resultMap="teamResultMap"/>
+            <collection property="teams" ofType="String" javaType="List">
+                <id property="value" column="TEAM_NAME" javaType="String"/>
+            </collection>
         </collection>
-    </resultMap>
-
-    <resultMap id="teamResultMap" type="Team">
-        <id property="teamId" column="TEAM_ID" />
-        <result property="name" column="TEAM_NAME" />
     </resultMap>
     
 </mapper>

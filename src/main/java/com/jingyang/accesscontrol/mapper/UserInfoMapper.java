@@ -1,15 +1,13 @@
 package com.jingyang.accesscontrol.mapper;
 
-import com.jingyang.accesscontrol.domain.PACL;
+import com.jingyang.accesscontrol.domain.VillainUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @Mapper
-public interface AccessControlMapper {
+public interface UserInfoMapper {
 
-    PACL getPACL(Long id);
+    VillainUser getUserByUsername(String username);
 
 }

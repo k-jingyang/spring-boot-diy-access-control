@@ -1,11 +1,12 @@
-package com.jingyang.accesscontrol.domain;
+package com.jingyang.accesscontrol.config;
 
-import java.io.Console;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.jingyang.accesscontrol.domain.PACL;
 import com.jingyang.accesscontrol.mapper.AccessControlMapper;
 import org.openpolicyagent.voter.OPADataRequest;
 import org.openpolicyagent.voter.OPADataResponse;
@@ -55,35 +56,24 @@ public class KmoOPAVoter implements AccessDecisionVoter<Object> {
             headers.put(header, filter.getRequest().getHeader(header));
         }
 
-        // replaceAll regex takes away leading and trailing slashes
-        String[] path = filter.getRequest().getRequestURI().replaceAll("^/|/$", "").split("/");
-        log.debug("requestURI: {}", Arrays.toString(path));
-
+        // replaceAll regex removes trailing slash
+        String requestURI = filter.getRequest().getRequestURI().replaceAll("/$", "");
+        log.debug("requestURI: {}", requestURI);
 
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("auth", authentication);
         input.put("method", filter.getRequest().getMethod());
+        String[] path = requestURI.replaceFirst("/", "").split("/");
         input.put("path", path);
         input.put("headers", headers);
 
-        // For /api/v1/p/1 or /api/v1/a/1
-        if (path.length > 3) {
-            PACL pacl = null;
-            Long pId = null;
-            switch(path[2]) {
-                case "p":
-                    pId = Long.parseLong(path[3]);
-                    pacl = accessControlMapper.getPACL(pId);
-                    break;
-                case "a":
-                    pId = 1L; // getP_ID of A
-                    pacl = accessControlMapper.getPACL(pId);
-                default:
-                    break;
-            }
+        // For /api/v1/pokemon/X
+        if (requestURI.startsWith("/api/v1/pokemon/")) {
+            String pokemonId = path[3];
 
-            if(pacl != null) {
-                input.put("pacl", pacl.getTeamToRolesHashMap());
+            PACL pokemonACL = accessControlMapper.getPACL(Long.parseLong(pokemonId));
+            if(pokemonACL != null) {
+                input.put("pacl", pokemonACL.getTeamToRolesHashMap());
             }
         }
 

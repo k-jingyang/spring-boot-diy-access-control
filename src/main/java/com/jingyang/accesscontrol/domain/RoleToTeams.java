@@ -13,5 +13,5 @@ import java.util.List;
 @ToString
 public class RoleToTeams {
     private String role;
-    private List<Team> teamList;
+    private List<String> teams;
 }
