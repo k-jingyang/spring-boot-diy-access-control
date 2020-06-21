@@ -22,7 +22,7 @@ public class VillainUser implements UserDetails {
     @JsonIgnore
     private String password;
     private List<String> roles;
-    private List<Team> teams;
+    private List<String> teams;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

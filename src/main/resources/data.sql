@@ -1,5 +1,6 @@
 INSERT INTO USERS (USERNAME, PASSWORD, ROLE) VALUES
 ('rocket_grunt',        '{bcrypt}$2a$10$AQGbP79Bm2Gfv8Lt.M.6pOzIN7u4r67WrKRgWPkedZGCZhyVQ6Y6W', 'USER'),
+('aqua_grunt',        '{bcrypt}$2a$10$AQGbP79Bm2Gfv8Lt.M.6pOzIN7u4r67WrKRgWPkedZGCZhyVQ6Y6W', 'USER'),
 ('magma_grunt',         '{bcrypt}$2a$10$AQGbP79Bm2Gfv8Lt.M.6pOzIN7u4r67WrKRgWPkedZGCZhyVQ6Y6W', 'USER'),
 ('magma_galactic_grunt','{bcrypt}$2a$10$AQGbP79Bm2Gfv8Lt.M.6pOzIN7u4r67WrKRgWPkedZGCZhyVQ6Y6W', 'USER'),
 ('galactic_grunt',      '{bcrypt}$2a$10$AQGbP79Bm2Gfv8Lt.M.6pOzIN7u4r67WrKRgWPkedZGCZhyVQ6Y6W', 'USER');
