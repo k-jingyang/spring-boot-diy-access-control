@@ -1,15 +1,9 @@
 package com.jingyang.accesscontrol.config;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.jingyang.accesscontrol.domain.PACL;
 import com.jingyang.accesscontrol.mapper.AccessControlMapper;
-import org.openpolicyagent.voter.OPADataRequest;
-import org.openpolicyagent.voter.OPADataResponse;
+import com.jingyang.accesscontrol.opa.OPADataRequest;
+import com.jingyang.accesscontrol.opa.OPADataResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +14,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class KmoOPAVoter implements AccessDecisionVoter<Object> {
