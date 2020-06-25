@@ -8,7 +8,7 @@ allow_user_roles {
 
 allow {
 	# To allow these paths as long as there are user roles
-    input.path = ""
+    input.path = [""]
 	allow_user_roles == true
 }
 
