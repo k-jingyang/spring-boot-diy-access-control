@@ -1,0 +1,12 @@
+{
+    "1": {
+	"ROCKET": "owner",
+	"GALACTIC": "collaborator",
+	"MAGMA": "viewer"
+    },
+    "2": {
+	"ROCKET": "collaborator",
+	"GALACTIC": "owner",
+	"MAGMA": "viewer"
+    }
+}

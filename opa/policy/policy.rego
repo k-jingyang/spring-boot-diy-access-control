@@ -1,5 +1,7 @@
 package http.authz
 
+import data.acl as acl
+
 default allow = false
 
 roles = {
@@ -17,19 +19,6 @@ computed_permissions[role] = perms {
 	roles[role]
 	reachable := graph.reachable(roles_graph, {role})
 	perms := {item | reachable[k]; item := roles[k].permissions[_]}
-}
-
-acl = {
-	"1": {
-		"ROCKET": "owner",
-		"GALACTIC": "collaborator",
-		"MAGMA": "viewer",
-	},
-	"2": {
-		"ROCKET": "collaborator",
-		"GALACTIC": "owner",
-		"MAGMA": "viewer",
-	},
 }
 
 has_user_role {
