@@ -5,7 +5,10 @@ services:
     ports:
       - "8181:8181"
     volumes:
-      - type: bind
-        source: ./policy
-        target: /policy
-    command: ["run", "--server", "--log-level", "debug", "--log-format", "json-pretty", "/policy"]
+      - ./policy/policy.rego:/policy/policy.rego:ro
+    command:
+      - "run"
+      - "--server"
+      - "--log-format=json-pretty"
+      - "--set=decision_logs.console=true"
+      - "/policy/policy.rego"
