@@ -68,13 +68,6 @@ public class KmoOPAVoter implements AccessDecisionVoter<Object> {
         String[] path = requestURI.replaceFirst("/", "").split("/");
         input.put("path", path);
 
-        // For /api/v1/pokemon/X
-        if (requestURI.startsWith("/api/v1/pokemon/")) {
-            String pokemonId = path[3];
-            log.debug("added pokemonId: {}", pokemonId);
-            input.put("pokemon_id", pokemonId);
-        }
-
         RestTemplate client = new RestTemplate();
         HttpEntity<?> request = new HttpEntity<>(new OPADataRequest(input));
         OPADataResponse response =
@@ -83,7 +76,7 @@ public class KmoOPAVoter implements AccessDecisionVoter<Object> {
         if (!response.getResult()) {
             return ACCESS_DENIED;
         }
-        
+
         return ACCESS_GRANTED;
 
     }

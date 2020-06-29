@@ -33,14 +33,12 @@ allow {
 
 user_teams = input.auth.principal.teams
 
-pokemon_id = input.pokemon_id
-
 # READ - GENERAL INFORMATION
 allow {
-	input.method == "GET"
-
-	input.path = ["api", "v1", "pokemon", _]
 	has_user_role
+
+	input.method == "GET"
+	input.path = ["api", "v1", "pokemon", pokemon_id]
 
 	# "pokemon:location" is among the computed permissions for one of this user's user_teams
 	computed_permissions[acl[pokemon_id][user_teams[_]]][_] == "pokemon:general-info"
@@ -48,10 +46,10 @@ allow {
 
 # READ - LOCATION
 allow {
-	input.method == "GET"
-
-	input.path = ["api", "v1", "pokemon", _, "location"]
 	has_user_role
+
+	input.method == "GET"
+	input.path = ["api", "v1", "pokemon", pokemon_id, "location"]
 
 	# "pokemon:location" is among the computed permissions for one of this user's user_teams
 	computed_permissions[acl[pokemon_id][user_teams[_]]][_] == "pokemon:location"
