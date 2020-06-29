@@ -60,20 +60,19 @@ public class KmoOPAVoter implements AccessDecisionVoter<Object> {
         log.debug("requestURI: {}", requestURI);
 
         Map<String, Object> input = new HashMap<String, Object>();
+
         input.put("auth", authentication);
         input.put("method", filter.getRequest().getMethod());
+        input.put("headers", headers);
+
         String[] path = requestURI.replaceFirst("/", "").split("/");
         input.put("path", path);
-        input.put("headers", headers);
 
         // For /api/v1/pokemon/X
         if (requestURI.startsWith("/api/v1/pokemon/")) {
             String pokemonId = path[3];
-
-            PACL pokemonACL = accessControlMapper.getPACL(Long.parseLong(pokemonId));
-            if(pokemonACL != null) {
-                input.put("pacl", pokemonACL.getTeamToRolesHashMap());
-            }
+            log.debug("added pokemonId: {}", pokemonId);
+            input.put("pokemon_id", pokemonId);
         }
 
         RestTemplate client = new RestTemplate();
